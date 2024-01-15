@@ -15,7 +15,7 @@ const Traits = () => {
           <Table.TextHeaderCell>trait</Table.TextHeaderCell>
           <Table.TextHeaderCell>Value</Table.TextHeaderCell>
         </Table.Head>
-        <Table.VirtualBody height={800}>
+        <Table.VirtualBody height={1000}>
           {userTraits.map((trait) => (
             <Table.Row key={trait.id} isSelectable onSelect={() => alert(trait.value)}>
               <Table.TextCell>{trait.key}</Table.TextCell>

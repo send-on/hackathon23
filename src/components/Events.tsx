@@ -18,7 +18,7 @@ const Events = () => {
           <Table.TextHeaderCell flexBasis={300} flexShrink={0} flexGrow={0}>Timestamp</Table.TextHeaderCell>
           <Table.TextHeaderCell flexBasis={800} >Properties</Table.TextHeaderCell>
         </Table.Head>
-        <Table.VirtualBody height={800}>
+        <Table.VirtualBody height={1000}>
           {userEvents.map((event) => (
             <Table.Row key={event.id} isSelectable onSelect={() => toaster.success(`Properties: ${JSON.stringify(event.properties)}`)}>
               <Table.TextCell flexBasis={300} flexShrink={0} flexGrow={0}>{event.event}</Table.TextCell>
