@@ -58,7 +58,7 @@ const Description = () => {
   return (
     <div className='sub-section'>
       <Button appearance="primary" type='submit' onClick={() => onSubmit()} isLoading={loading}>
-        ✊ Submit
+        Generate AI Summary
       </Button>
       
       <ResponseForm  />
