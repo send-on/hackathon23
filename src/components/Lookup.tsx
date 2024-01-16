@@ -32,10 +32,13 @@ const LookupUser = () => {
       console.log(userInfo)
       setUserTraits(userInfo.data.traits)
       setUserEvents(userInfo.data.events)
+      toaster.success(`User: ${user}`)
     }
     catch (e) {
+      toaster.danger(`User: ${user} not found`)
       console.log(e)
     }
+
     
   }
 

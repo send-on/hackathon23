@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { AppContext } from '@/context/AppProvider';
-import { Table } from 'evergreen-ui'
+import { Table, toaster } from 'evergreen-ui'
 
 
 const Traits = () => {
@@ -17,7 +17,7 @@ const Traits = () => {
         </Table.Head>
         <Table.VirtualBody height={1000}>
           {userTraits.map((trait) => (
-            <Table.Row key={trait.id} isSelectable onSelect={() => alert(trait.value)}>
+            <Table.Row key={trait.id} isSelectable onSelect={() => toaster.success(trait.value)}>
               <Table.TextCell>{trait.key}</Table.TextCell>
               <Table.TextCell>{trait.value}</Table.TextCell>
             </Table.Row>
