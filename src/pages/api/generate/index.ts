@@ -16,7 +16,7 @@ export default async function POST(req: Request): Promise<Response> {
   };
 
   let temp=0.1;
-  let context = "The two objects are list of traits and events for a given the user. These are collected from a user profile which tracks user behaviors and actions.  Provide a short paragraph describing the user based on the traits and events provided.  This is an ecommerce use case selling shoes and apparel.  Wrap up the paragraph by adding a line break and putting the user into an audience group such as Power User, Recently Returned, etc."
+  let context = "The two objects are list of traits and events for a given the user. These are collected from a user profile which tracks user behaviors and actions.  Provide a short paragraph describing the user based on the traits and events provided.  This is an ecommerce use case selling shoes and apparel.  Wrap up the paragraph by adding a line break and putting the user into an audience group such as Power User, Recently Returned, etc.  After that, provide me their most likely next action."
 
   
 
