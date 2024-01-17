@@ -28,7 +28,6 @@ export default async function handler(
 ) {
 
   const user = req.body.data.user;
-  console.log(user)
 
   let config_traits = {
     method: 'get',

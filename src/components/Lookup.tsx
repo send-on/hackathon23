@@ -14,13 +14,25 @@ const LookupUser = () => {
 
   const submitNotes = async () => {
     const currentTime = new Date()
-    analytics.identify({
-      userId: user,
-      traits: {
-        [`notes${JSON.stringify(currentTime)}`]: notes
-      }
-    })
-    toaster.success(`Notes: ${notes}`)
+    if (notes.includes(":")) {
+      let temp_arr = notes.split(":")
+      analytics.identify({
+        userId: user,
+        traits: {
+          [temp_arr[0]]: temp_arr[1]
+        }
+      })
+      toaster.success(`Trait: ${temp_arr[0]} Value: ${temp_arr[1]}`)
+    } else {
+      analytics.identify({
+        userId: user,
+        traits: {
+          [`notes${JSON.stringify(currentTime)}`]: notes
+        }
+      })
+      toaster.success(`Notes: ${notes}`)
+    }
+    
   }
 
 
@@ -29,7 +41,6 @@ const LookupUser = () => {
       let userInfo = await axios.post('/api/prapi', {
         data: {user: user}
       })
-      console.log(userInfo)
       setUserTraits(userInfo.data.traits)
       setUserEvents(userInfo.data.events)
       toaster.success(`User: ${user}`)
