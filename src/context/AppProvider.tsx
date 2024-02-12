@@ -8,7 +8,7 @@ interface AppProvider {
 const AppContext = createContext({});
 
 const AppProvider = ({ children }: any) => {
-  const [user, setUser] = useState("6220faf2"); 
+  const [user, setUser] = useState(process.env.NEXT_PUBLIC_USER_ID); 
   const [userTraits, setUserTraits] = useState([]); 
   const [userEvents, setUserEvents] = useState([]); 
   const [loading, setLoading] = useState(false); 
