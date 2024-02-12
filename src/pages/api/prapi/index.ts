@@ -22,26 +22,36 @@ function objectToArray(traits) {
   }));
 }
 
+function base64Encode(str) {
+  return btoa(encodeURIComponent(str+":").replace(/%([0-9A-F]{2})/g,
+    function toSolidBytes(match, p1) {
+      return String.fromCharCode('0x' + p1);
+  }));
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
 
+  
   const user = req.body.data.user;
+  const profileKey = req.body.data.profileKey;
+  const spaceID = req.body.data.spaceID;
 
   let config_traits = {
     method: 'get',
-    url: `https://profiles.segment.com/v1/spaces/spa_8aoSVF3MKjU9t5Lq41jhb1/collections/users/profiles/user_id:${user}/traits?limit=100`,
+    url: `https://profiles.segment.com/v1/spaces/${spaceID}/collections/users/profiles/user_id:${user}/traits?limit=100`,
     headers: { 
-      'Authorization': 'Basic WjRselZwSUNjTGVTNGdmMUNsR3QtU3JlVXU2TkxMdFpYRjN1WjNsN0otUk55bnp6SUhYalJDVE9kc0xqbHY3XzNjQmlkYzhoaERxZWx6eEpUQy14bnVkZU91TFZXc21pVmNlTTQ2dnVVejFwRzVzeUN1TUFKN1FaYkhPTF9FQmViQXE2ajRUeVNoODU5RHpNRmZicUQ1VnoxWXFuVDZTRzQ2STFqc0RlUmplS1JVb3JfLW9xOWNiQ0QxOFJMY0tYWGFXQWVtQU1BRldiYzRPVXIxODBneG9zTHVVZi0tUmtGenRrRk03T3l2bHdVclhfSUtRUjRaLTlQTlNoMVI0c1lWbGxtN0lkaWRQb044RENVeTVGdXlPZVE4ST06'
+      'Authorization': `Basic ${base64Encode(profileKey)}`
     }
   }
 
   let config_events = {
     method: 'get',
-    url: `https://profiles.segment.com/v1/spaces/spa_8aoSVF3MKjU9t5Lq41jhb1/collections/users/profiles/user_id:${user}/events?limit=100`,
+    url: `https://profiles.segment.com/v1/spaces/${spaceID}/collections/users/profiles/user_id:${user}/events?limit=100`,
     headers: { 
-      'Authorization': 'Basic WjRselZwSUNjTGVTNGdmMUNsR3QtU3JlVXU2TkxMdFpYRjN1WjNsN0otUk55bnp6SUhYalJDVE9kc0xqbHY3XzNjQmlkYzhoaERxZWx6eEpUQy14bnVkZU91TFZXc21pVmNlTTQ2dnVVejFwRzVzeUN1TUFKN1FaYkhPTF9FQmViQXE2ajRUeVNoODU5RHpNRmZicUQ1VnoxWXFuVDZTRzQ2STFqc0RlUmplS1JVb3JfLW9xOWNiQ0QxOFJMY0tYWGFXQWVtQU1BRldiYzRPVXIxODBneG9zTHVVZi0tUmtGenRrRk03T3l2bHdVclhfSUtRUjRaLTlQTlNoMVI0c1lWbGxtN0lkaWRQb044RENVeTVGdXlPZVE4ST06'
+      'Authorization': `Basic ${base64Encode(profileKey)}`
     }
   }
 
@@ -63,8 +73,8 @@ export default async function handler(
     console.error(error);
   });
 
-  const events = reduceArrayToObject(events_temp);
 
+  const events = reduceArrayToObject(events_temp);
   const traits = objectToArray(traits_temp);
 
   res.status(200).json({ traits, events })

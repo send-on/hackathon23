@@ -3,14 +3,16 @@ import { useContext, useState } from 'react'
 import { AppContext } from '@/context/AppProvider';
 import axios from 'axios';
 import { Analytics } from '@segment/analytics-node'
+import Settings from "@/components/Settings";
 
 const LookupUser = () => {
-  const { user, setUser, setUserTraits, setUserEvents }:any = useContext(AppContext)
-  const analytics = new Analytics({ writeKey: 'bFUMyIN5TxsEBd0yGf2oTTA5qo4dqABK',
+  const { user, setUser, setUserTraits, setUserEvents, temp, setTemp, context, setContext, profileKey, spaceID }:any = useContext(AppContext)
+  const analytics = new Analytics({ writeKey: process.env.NEXT_PUBLIC_TRACKING_WRITEKEY,
     flushAt: 15,
     flushInterval: 1000
   })
   const [notes, setNotes] = useState('')
+
 
   const submitNotes = async () => {
     const currentTime = new Date()
@@ -39,7 +41,7 @@ const LookupUser = () => {
   const prapiUser = async (user: string) => {
     try {
       let userInfo = await axios.post('/api/prapi', {
-        data: {user: user}
+        data: {user: user, profileKey: profileKey, spaceID: spaceID }
       })
       setUserTraits(userInfo.data.traits)
       setUserEvents(userInfo.data.events)
@@ -49,8 +51,6 @@ const LookupUser = () => {
       toaster.danger(`User: ${user} not found`)
       console.log(e)
     }
-
-    
   }
 
 
@@ -68,9 +68,15 @@ const LookupUser = () => {
           <Button style={{marginLeft: "2em"}}  onClick={()=>submitNotes(notes)} >{`Add Trait`}</Button>
         </div>
         <div className="input-box flex-1">
-        <div className='header mb-2' >Text or Email Customer Directly</div>
-          <TextInput type="text" placeholder="Text Message"  onChange={e => setUser(e.target.value)} />
-          <Button style={{marginLeft: "2em"}}  onClick={()=>prapiUser(user)} >{`Message`}</Button>
+
+        <div className='header mb-2' >API and Context Settings</div>
+        <div className="text-left">
+            <Settings 
+            temp={temp}
+            setTemp={setTemp}
+            context={context}
+            setContext={setContext}
+          /></div>
         </div>
         
       </div>
@@ -79,4 +85,6 @@ const LookupUser = () => {
 }
 
 export default LookupUser
+
+
 

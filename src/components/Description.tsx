@@ -7,10 +7,8 @@ import { ResponseForm } from './ResponseForm';
 
 
 const Description = () => {
-  const { loading, setResponse, setLoading, userTraits, userEvents }:any = useContext(AppContext)
+  const { loading, setResponse, setLoading, userTraits, userEvents, context, temp }:any = useContext(AppContext)
   
-  
-
   const onSubmit = async(e: React.MouseEvent<HTMLButtonElement>) => {
     
     let prompt = `These are the traits: ${JSON.stringify(userTraits)} \n These are the events: ${JSON.stringify(userEvents)}`
@@ -24,7 +22,7 @@ const Description = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt,
+          prompt, context, temp
         }),
       });
   

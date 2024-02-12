@@ -11,14 +11,11 @@ export const config = {
 };
 
 export default async function POST(req: Request): Promise<Response> {
-  const { prompt} = (await req.json()) as {
+  const { prompt, context, temp } = (await req.json()) as {
     prompt: string;
+    context: string;
+    temp: number;
   };
-
-  let temp=0.1;
-  let context = "The two objects are list of traits and events for a given the user. These are collected from a user profile which tracks user behaviors and actions.  Provide a short paragraph describing the user based on the traits and events provided.  This is an ecommerce use case selling shoes and apparel.  Wrap up the paragraph by adding a line break and putting the user into an audience group such as Power User, Recently Returned, etc.  After that, provide me their most likely next action."
-
-  
 
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
@@ -34,7 +31,7 @@ export default async function POST(req: Request): Promise<Response> {
         content: `. The prompt is: ${prompt}. `,
       },
     ],
-    temperature: 0.2,
+    temperature: temp,
     // top_p: 1.0,
     // frequency_penalty: 0.0,
     // presence_penalty: 0.0,
