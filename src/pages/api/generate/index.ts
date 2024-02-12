@@ -22,7 +22,7 @@ export default async function POST(req: Request): Promise<Response> {
   }
 
   const payload: OpenAIStreamPayload = {
-    model: "gpt-3.5-turbo-1106",
+    model: process.env.OPENAI_MODEL,
     // model: "gpt-3.5-turbo",
     messages: [
       { role: "system", content: context },

@@ -6,20 +6,8 @@ function Settings() {
   const [isShown, setIsShown] = useState(false);
   const { temp, setTemp, context, setContext, profileKey, setProfileKey, writeKey, setWriteKey, spaceID, setSpaceID }:any = useContext(AppContext)
 
-  const handleTempChange = (e) => {
-    setTemp(e.target.value);
-  }
-  const handleSpaceChange = (e) => {
-    setSpaceID(e.target.value);
-  }
-  const handleProfileAPIChange = (e) => {
-    setProfileKey(e.target.value);
-  }
-  const handleWriteKeyChange = (e) => {
-    setWriteKey(e.target.value);
-  }
-  const handleContextChange = (e) => {
-    setContext(e.target.value);
+  const handleChange = (value: any, setState: (arg0: any) => void) => {
+    setState(value);
   }
 
   const saveSettings = (e) => {
@@ -57,15 +45,15 @@ function Settings() {
           </Pane>
         </Pane>
         <Pane flex="1" overflowY="scroll" background="tint1" padding={16}>
-        <div>Space ID: <TextInput name="temp" value={spaceID} onChange={handleSpaceChange} />
+        <div>Space ID: <TextInput name="temp" value={spaceID} onChange={(e)=>handleChange(e.target.value, setSpaceID)} />
           </div>
-          <div>Profile API Key: <TextInput name="temp" value={profileKey} onChange={handleProfileAPIChange} />
+          <div>Profile API Key: <TextInput name="temp" value={profileKey} onChange={(e)=>handleChange(e.target.value, setProfileKey)} />
           </div>
-          <div>Write Key: <TextInput name="temp" value={writeKey} onChange={handleWriteKeyChange} />
+          <div>Write Key: <TextInput name="temp" value={writeKey} onChange={(e)=>handleChange(e.target.value, setWriteKey)} />
           </div>
-          <div>Temperature (0 to 0.9): <TextInput name="temp" value={temp} onChange={handleTempChange} />
+          <div>Temperature (0 to 0.9): <TextInput name="temp" value={temp} onChange={(e)=>handleChange(e.target.value, setTemp)} />
           </div>
-          <div>Context: <Textarea minHeight="500px" name="context" value={context} onChange={handleContextChange} />
+          <div>Context: <Textarea minHeight="500px" name="context" value={context} onChange={(e)=>handleChange(e.target.value, setContext)} />
           </div>
           <Button appearance="primary" intent="success" onClick={saveSettings}>Save</Button>
           <Button className="ml-2" onClick={resetSettings}>Reset</Button>
